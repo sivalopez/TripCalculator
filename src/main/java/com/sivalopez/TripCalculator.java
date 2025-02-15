@@ -27,6 +27,8 @@ public class TripCalculator {
         taps.sort(Comparator.comparing(Tap::getTapTime));
         for (int i = 0; i < taps.size(); i++) {
             Tap tap = taps.get(i);
+            // Only want to find matching OFF tap for an ON tap.
+            // Assumption: An OFF tap shouldn't exist without a matching ON tap.
             if (tap.getTapType().equals("OFF")) {
                 continue;
             }
@@ -41,12 +43,12 @@ public class TripCalculator {
             trip.setCompanyId(tap.getCompanyId());
             trip.setBusId(tap.getBusId());
             trip.setStatus(tripStatus);
-            if (tripStatus.equalsIgnoreCase("COMPLETED")) {
+            if (!tripStatus.equalsIgnoreCase("INCOMPLETE")) {
                 trip.setEndDate(tapOff.getTapTime());
                 trip.setToStopId(tapOff.getStopId());
                 trip.setDurationSecs(Duration.between(trip.getStartDate(), trip.getEndDate()).getSeconds());
             }
-            // TODO: Handle INCOMPLETE and CANCELLED status
+
             panTrips.add(trip);
         }
         return panTrips;
@@ -58,7 +60,11 @@ public class TripCalculator {
         if (tapOff == null) {
             status = "INCOMPLETE";
         } else if (tapOn.getStopId().equalsIgnoreCase(tapOff.getStopId())) {
-            status = "CANCELLED";
+            // Assumption: Trip is cancelled when customer taps OFF at the same stop within 5 minutes of tapping ON.
+            long tripDuration = Duration.between(tapOn.getTapTime(), tapOff.getTapTime()).getSeconds();
+            if (tripDuration < 300) {
+                status = "CANCELLED";
+            }
         }
 
         return status;
