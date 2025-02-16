@@ -9,6 +9,7 @@ public class Trip {
     private long durationSecs;
     private String fromStopId;
     private String toStopId;
+    // Using double for amount as there are no calculations required, but ideally should use BigDecimal.
     private double chargeAmount;
     private String companyId;
     private String busId;
@@ -53,8 +54,16 @@ public class Trip {
         this.durationSecs = durationSecs;
     }
 
+    public String getFromStopId() {
+        return this.fromStopId;
+    }
+
     public void setFromStopId(String fromStopId) {
         this.fromStopId = fromStopId;
+    }
+
+    public String getToStopId() {
+        return this.toStopId;
     }
 
     public void setToStopId(String toStopId) {
@@ -105,7 +114,7 @@ public class Trip {
 
     @Override
     public String toString() {
-        return "Trip {" +
+        return "Trip { " +
                 "startDate: " + this.startDate + ",\n" +
                 "endDate: " + this.endDate + ",\n" +
                 "durationSecs: " + this.durationSecs + ",\n" +
@@ -115,7 +124,7 @@ public class Trip {
                 "companyId: " + this.companyId + ",\n" +
                 "busId: " + this.busId + ",\n" +
                 "pan: " + this.pan + ",\n" +
-                "status: " + this.status + ",\n" +
-                "}";
+                "status: " + this.status +
+                " }";
     }
 }

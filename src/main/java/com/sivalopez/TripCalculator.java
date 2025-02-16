@@ -48,6 +48,7 @@ public class TripCalculator {
                 trip.setToStopId(tapOff.getStopId());
                 trip.setDurationSecs(Duration.between(trip.getStartDate(), trip.getEndDate()).getSeconds());
             }
+            trip.setChargeAmount(ChargeLookup.lookupChargeForTrip(trip));
 
             panTrips.add(trip);
         }
