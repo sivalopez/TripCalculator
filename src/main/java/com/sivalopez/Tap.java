@@ -1,6 +1,9 @@
 package com.sivalopez;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Tap {
@@ -12,14 +15,20 @@ public class Tap {
     private String busId;
     private String pan;
 
-    public Tap(int id, ZonedDateTime tapTime, String tapType, String stopId, String companyId, String busId, String pan) {
+    public Tap(int id, String tapTime, String tapType, String stopId, String companyId, String busId, String pan) {
         this.id = id;
-        this.tapTime = tapTime;
+        this.tapTime = parseDate(tapTime);
         this.tapType = tapType;
         this.stopId = stopId;
         this.companyId = companyId;
         this.busId = busId;
         this.pan = pan;
+    }
+
+    private ZonedDateTime parseDate(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        LocalDateTime localDateTime = LocalDateTime.parse(dateString, formatter);
+        return localDateTime.atZone(ZoneId.of("UTC"));
     }
 
     public ZonedDateTime getTapTime() {

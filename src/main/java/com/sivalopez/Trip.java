@@ -50,6 +50,10 @@ public class Trip {
         this.endDate = endDate;
     }
 
+    public long getDurationSecs() {
+        return this.durationSecs;
+    }
+
     public void setDurationSecs(long durationSecs) {
         this.durationSecs = durationSecs;
     }
@@ -70,20 +74,40 @@ public class Trip {
         this.toStopId = toStopId;
     }
 
+    public double getChargeAmount() {
+        return this.chargeAmount;
+    }
+
     public void setChargeAmount(double chargeAmount) {
         this.chargeAmount = chargeAmount;
+    }
+
+    public String getCompanyId() {
+        return this.companyId;
     }
 
     public void setCompanyId(String companyId) {
         this.companyId = companyId;
     }
 
+    public String getBusId() {
+        return this.busId;
+    }
+
     public void setBusId(String busId) {
         this.busId = busId;
     }
 
+    public String getPan() {
+        return this.pan;
+    }
+
     public void setPan(String pan) {
         this.pan = pan;
+    }
+
+    public String getStatus() {
+        return this.status;
     }
 
     public void setStatus(String status) {
