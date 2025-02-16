@@ -64,10 +64,9 @@ public class TripCalculatorTest {
     @Test
     void testFindAnyMatchingTapOffForgotToTapOff() {
         Tap tapTwo = new Tap(2, "22-01-2023 19:20:00", "ON", "Stop2", "Company1", "Bus37","5500005555555559");
-        Tap tapThree = new Tap(3, "22-01-2023 19:30:00", "OFF", "Stop1", "Company1", "Bus37","5500005555555559");
 
         TripCalculator calculator = new TripCalculator();
-        Tap actualTap = calculator.findMatchingTapOff(tapStart, Arrays.asList(tapStart, tapTwo, tapThree));
+        Tap actualTap = calculator.findMatchingTapOff(tapStart, Arrays.asList(tapStart, tapTwo));
 
         assertNull(actualTap);
     }

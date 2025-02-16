@@ -22,10 +22,10 @@ public class TripCSVExporter {
             trips.forEach(trip -> {
                 String[] data = {
                         trip.getStartDate().format(formatter),
-                        trip.getEndDate().format(formatter),
+                        trip.getEndDate() == null ? "" : trip.getEndDate().format(formatter),
                         String.valueOf(trip.getDurationSecs()),
                         trip.getFromStopId(),
-                        trip.getToStopId(),
+                        trip.getToStopId() == null ? "" : trip.getToStopId(),
                         "$" + trip.getChargeAmount(),
                         trip.getCompanyId(),
                         trip.getBusId(),

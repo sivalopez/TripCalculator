@@ -1,19 +1,32 @@
 package com.sivalopez;
 
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvDate;
+
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Tap {
+    @CsvBindByName(column = "ID")
     private int id;
-    private ZonedDateTime tapTime;
+    @CsvBindByName(column = "DateTimeUTC")
+    @CsvDate(" dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime tapTime;
+    @CsvBindByName(column = "TapType")
     private String tapType;
+    @CsvBindByName(column = "StopId")
     private String stopId;
+    @CsvBindByName(column = "CompanyId")
     private String companyId;
+    @CsvBindByName(column = "BusID")
     private String busId;
+    @CsvBindByName(column = "PAN")
     private String pan;
+
+    public Tap() {
+        // empty constructor
+    }
 
     public Tap(int id, String tapTime, String tapType, String stopId, String companyId, String busId, String pan) {
         this.id = id;
@@ -25,22 +38,21 @@ public class Tap {
         this.pan = pan;
     }
 
-    private ZonedDateTime parseDate(String dateString) {
+    private LocalDateTime parseDate(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        LocalDateTime localDateTime = LocalDateTime.parse(dateString, formatter);
-        return localDateTime.atZone(ZoneId.of("UTC"));
+        return LocalDateTime.parse(dateString, formatter);
     }
 
-    public ZonedDateTime getTapTime() {
+    public LocalDateTime getTapTime() {
         return this.tapTime;
     }
 
     public String getTapType() {
-        return this.tapType;
+        return this.tapType.trim();
     }
 
     public String getStopId() {
-        return this.stopId;
+        return this.stopId.trim();
     }
 
     public String getCompanyId() {
@@ -48,7 +60,7 @@ public class Tap {
     }
 
     public String getBusId() {
-        return this.busId;
+        return this.busId.trim();
     }
 
     public String getPan() {
@@ -73,14 +85,16 @@ public class Tap {
 
     @Override
     public String toString() {
+        String pan = this.getPan();
+        String lastFour = pan.substring(this.getPan().length() - 4);
         return "Tap {\n" +
-                "id: " + this.id + ",\n" +
-                "taptime: " + this.tapTime + ",\n" +
-                "tapType: " + this.tapType + ",\n" +
-                "stopId: " + this.stopId + ",\n" +
-                "companyId: " + this.companyId + ",\n" +
-                "busId: " + this.busId + ",\n" +
-                "pan: " + this.pan + // TODO: Mask PAN
+                "id: [" + this.id + "],\n" +
+                "taptime: [" + this.getTapTime() + "],\n" +
+                "tapType: [" + this.getTapType() + "],\n" +
+                "stopId: [" + this.getStopId() + "],\n" +
+                "companyId: [" + this.getCompanyId() + "],\n" +
+                "busId: [" + this.getBusId() + "],\n" +
+                "pan: [" + pan.substring(1, pan.length() - 4).replaceAll(".", "*") + lastFour + "]\n" +
                 "}";
     }
 }

@@ -1,11 +1,12 @@
 package com.sivalopez;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
 public class Trip {
-    private ZonedDateTime startDate;
-    private ZonedDateTime endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private long durationSecs;
     private String fromStopId;
     private String toStopId;
@@ -20,7 +21,7 @@ public class Trip {
         // Empty constructor
     }
 
-    public Trip(ZonedDateTime startDate, ZonedDateTime endDate, long durationSecs, String fromStopId, String toStopId,
+    public Trip(LocalDateTime startDate, LocalDateTime endDate, long durationSecs, String fromStopId, String toStopId,
                 double chargeAmount, String companyId, String busId, String pan, String status) {
         this.startDate = startDate;
         this.endDate = endDate;
@@ -34,19 +35,19 @@ public class Trip {
         this.status = status;
     }
 
-    public ZonedDateTime getStartDate() {
+    public LocalDateTime getStartDate() {
         return this.startDate;
     }
 
-    public void setStartDate(ZonedDateTime startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public ZonedDateTime getEndDate() {
+    public LocalDateTime getEndDate() {
         return this.endDate;
     }
 
-    public void setEndDate(ZonedDateTime endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -59,7 +60,7 @@ public class Trip {
     }
 
     public String getFromStopId() {
-        return this.fromStopId;
+        return this.fromStopId.trim();
     }
 
     public void setFromStopId(String fromStopId) {
@@ -67,6 +68,9 @@ public class Trip {
     }
 
     public String getToStopId() {
+        if (this.toStopId != null) {
+            return this.toStopId.trim();
+        }
         return this.toStopId;
     }
 
@@ -83,7 +87,7 @@ public class Trip {
     }
 
     public String getCompanyId() {
-        return this.companyId;
+        return this.companyId.trim();
     }
 
     public void setCompanyId(String companyId) {
@@ -91,7 +95,7 @@ public class Trip {
     }
 
     public String getBusId() {
-        return this.busId;
+        return this.busId.trim();
     }
 
     public void setBusId(String busId) {
@@ -99,7 +103,7 @@ public class Trip {
     }
 
     public String getPan() {
-        return this.pan;
+        return this.pan.trim();
     }
 
     public void setPan(String pan) {
@@ -138,6 +142,8 @@ public class Trip {
 
     @Override
     public String toString() {
+        String pan = this.getPan();
+        String lastFour = pan.substring(this.getPan().length() - 4);
         return "Trip { " +
                 "startDate: " + this.startDate + ",\n" +
                 "endDate: " + this.endDate + ",\n" +
@@ -147,7 +153,7 @@ public class Trip {
                 "chargeAmount: " + this.chargeAmount + ",\n" +
                 "companyId: " + this.companyId + ",\n" +
                 "busId: " + this.busId + ",\n" +
-                "pan: " + this.pan + ",\n" +
+                "pan: " + pan.substring(1, pan.length() - 4).replaceAll(".", "*") + lastFour + ",\n" +
                 "status: " + this.status +
                 " }";
     }

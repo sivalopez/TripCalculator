@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 public class TripCalculator {
     public TripCalculator() {
-
     }
 
     public List<Trip> calculateTrips(List<Tap> allTaps) {
@@ -25,8 +24,10 @@ public class TripCalculator {
         List<Trip> panTrips = new ArrayList<>();
         // sort by datetime to find the first match.
         taps.sort(Comparator.comparing(Tap::getTapTime));
+
         for (int i = 0; i < taps.size(); i++) {
             Tap tap = taps.get(i);
+
             // Only want to find matching OFF tap for an ON tap.
             // Assumption: An OFF tap shouldn't exist without a matching ON tap.
             if (tap.getTapType().equals("OFF")) {
@@ -61,11 +62,7 @@ public class TripCalculator {
         if (tapOff == null) {
             status = "INCOMPLETE";
         } else if (tapOn.getStopId().equalsIgnoreCase(tapOff.getStopId())) {
-            // Assumption: Trip is cancelled when customer taps OFF at the same stop within 5 minutes of tapping ON.
-            long tripDuration = Duration.between(tapOn.getTapTime(), tapOff.getTapTime()).getSeconds();
-            if (tripDuration < 300) {
-                status = "CANCELLED";
-            }
+            status = "CANCELLED";
         }
 
         return status;
@@ -75,13 +72,19 @@ public class TripCalculator {
         return allTaps.stream().collect(Collectors.groupingBy(Tap::getPan));
     }
 
+    /**
+     * Finds matching tap OFF from the list of taps.
+     * @param tapOn
+     * @param taps
+     * @return Matching Tap if found otherwise returns null.
+     */
     public Tap findMatchingTapOff(Tap tapOn, List<Tap> taps) {
         Tap defaultTap = null;
+
         return taps.stream()
                 .filter(tap -> tap.getTapTime().toLocalDate().equals(tapOn.getTapTime().toLocalDate()))
                 .filter(tap -> tap.getBusId().equals(tapOn.getBusId()))
                 .filter(tap -> tap.getTapType().equalsIgnoreCase("OFF"))
-                .filter(tap -> !tap.getStopId().equalsIgnoreCase(tapOn.getStopId()))
                 .findFirst().orElse(defaultTap);
     }
 }
