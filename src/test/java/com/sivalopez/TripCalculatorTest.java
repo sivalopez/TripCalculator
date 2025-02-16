@@ -11,7 +11,7 @@ public class TripCalculatorTest {
     Tap tapEnd = new Tap(2, "22-01-2023 13:05:00", "OFF", "Stop2", "Company1", "Bus37","5500005555555559");
 
     @Test
-    void testDetermineCompletedTripStatus() {
+    public void testDetermineCompletedTripStatus() {
         TripCalculator calculator = new TripCalculator();
         String actualStatus = calculator.determineTripStatus(tapStart, tapEnd);
 
@@ -19,7 +19,7 @@ public class TripCalculatorTest {
     }
 
     @Test
-    void testDetermineIncompleteTripStatus() {
+    public void testDetermineIncompleteTripStatus() {
         TripCalculator calculator = new TripCalculator();
         String actualStatus = calculator.determineTripStatus(tapStart, null);
 
@@ -27,7 +27,7 @@ public class TripCalculatorTest {
     }
 
     @Test
-    void testDetermineCancelledTripStatus() {
+    public void testDetermineCancelledTripStatus() {
         Tap tapEnd3mins = new Tap(2, "22-01-2023 13:03:00", "OFF", "Stop1", "Company1", "Bus37","5500005555555559");
 
         TripCalculator calculator = new TripCalculator();
@@ -37,7 +37,7 @@ public class TripCalculatorTest {
     }
 
     @Test
-    void testGetTapGroupsByPan() {
+    public void testGetTapGroupsByPan() {
         Tap tapThree = new Tap(3, "22-01-2023 09:20:00", "ON", "Stop3", "Company1", "Bus36","4111111111111111");
 
         Map<String, List<Tap>> expectedTapGroups = new HashMap<>();
@@ -51,7 +51,7 @@ public class TripCalculatorTest {
     }
 
     @Test
-    void testFindAMatchingTapOffFromMultipleDates() {
+    public void testFindAMatchingTapOffFromMultipleDates() {
         Tap tapThree = new Tap(3, "23-01-2023 09:20:00", "ON", "Stop1", "Company1", "Bus37","5500005555555559");
         Tap tapFour = new Tap(4, "23-01-2023 09:25:00", "OFF", "Stop2", "Company1", "Bus37","5500005555555559");
 
@@ -62,7 +62,7 @@ public class TripCalculatorTest {
     }
 
     @Test
-    void testFindAnyMatchingTapOffForgotToTapOff() {
+    public void testFindAnyMatchingTapOffForgotToTapOff() {
         Tap tapTwo = new Tap(2, "22-01-2023 19:20:00", "ON", "Stop2", "Company1", "Bus37","5500005555555559");
 
         TripCalculator calculator = new TripCalculator();

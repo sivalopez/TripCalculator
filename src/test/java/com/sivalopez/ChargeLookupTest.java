@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ChargeLookupTest {
     // TODO: Use @ParameterizedTest
     @Test
-    void testLookupChargeForACompletedTrip() {
+    public void testLookupChargeForACompletedTrip() {
         Trip trip = new Trip();
         trip.setFromStopId("Stop1");
         trip.setToStopId("Stop2");
@@ -17,7 +17,7 @@ public class ChargeLookupTest {
     }
 
     @Test
-    void testLookupChargeForAnIncompleteTrip() {
+    public void testLookupChargeForAnIncompleteTrip() {
         Trip trip = new Trip();
         trip.setFromStopId("Stop1");
         double chargeAmount = ChargeLookup.lookupChargeForTrip(trip);
@@ -26,7 +26,7 @@ public class ChargeLookupTest {
     }
 
     @Test
-    void testLookupChargeForACancelledTrip() {
+    public void testLookupChargeForACancelledTrip() {
         Trip trip = new Trip();
         trip.setFromStopId("Stop1");
         trip.setToStopId("Stop1");
